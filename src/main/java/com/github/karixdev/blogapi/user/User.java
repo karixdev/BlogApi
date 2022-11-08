@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity(name = "User")
 @Table(
@@ -28,14 +27,23 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class User implements UserDetails {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
     @Column(
             name = "id",
-            nullable = false,
-            updatable = false
+            updatable = false,
+            nullable = false
     )
-    private UUID id;
+    private Long id;
 
     @Column(
             name = "email",
