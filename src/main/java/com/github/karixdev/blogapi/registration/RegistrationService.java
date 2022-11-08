@@ -1,6 +1,9 @@
 package com.github.karixdev.blogapi.registration;
 
+import com.github.karixdev.blogapi.email.EmailService;
 import com.github.karixdev.blogapi.registration.dto.RegistrationRequest;
+import com.github.karixdev.blogapi.registration.token.ConfirmationToken;
+import com.github.karixdev.blogapi.registration.token.ConfirmationTokenService;
 import com.github.karixdev.blogapi.user.User;
 import com.github.karixdev.blogapi.user.UserRepository;
 import com.github.karixdev.blogapi.user.UserRole;
@@ -17,6 +20,8 @@ public class RegistrationService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final ConfirmationTokenService tokenService;
+    private final EmailService emailService;
 
     public Map<String, Boolean> registerNewUser(RegistrationRequest registrationRequest) {
 
@@ -28,11 +33,15 @@ public class RegistrationService {
                 .firstName(registrationRequest.getFirstName())
                 .lastName(registrationRequest.getLastName())
                 .userRole(UserRole.USER)
-                .isEnabled(Boolean.TRUE)
+                .isEnabled(Boolean.FALSE)
                 .password(encodedPassword)
                 .build();
 
+        ConfirmationToken token = tokenService.createTokenForUser(user);
+
         userRepository.save(user);
+
+        emailService.sendEmailConfirmation(token);
 
         return Map.of("success", Boolean.TRUE);
     }

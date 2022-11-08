@@ -20,3 +20,10 @@ services:
       PMA_HOST: mysql
     depends_on:
       - mysql
+
+  mail-catcher:
+    container_name: mail-catcher
+    image: schickling/mailcatcher
+    ports:
+      - '1025:1025'
+      - '1080:1080'
