@@ -35,11 +35,10 @@ public class EmailService {
     }
 
     private String getEmailConfirmationTemplate(ConfirmationToken token) {
-
         String template = """
                 <div>
                 <p>Hello %s</p>
-                <p>Here's email confirmation <a href="http://localhost:8080/token/confirm?token=%s">link</a></p>
+                <p>Here's email confirmation <a href="http://localhost:8080/api/auth/confirm?token=%s">link</a></p>
                 </div>
                 """;
 

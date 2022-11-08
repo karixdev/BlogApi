@@ -1,6 +1,7 @@
 package com.github.karixdev.blogapi.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             WHERE user.email = :email
             """)
     Optional<User> findByEmail(@Param("email") String email);
+
 }

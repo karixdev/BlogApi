@@ -21,4 +21,9 @@ public class UserService implements UserDetailsService {
                     );
                 });
     }
+
+    public void enableUser(User user) {
+        user.setIsEnabled(Boolean.TRUE);
+        userRepository.save(user);
+    }
 }

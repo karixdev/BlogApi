@@ -2,15 +2,14 @@ package com.github.karixdev.blogapi.auth;
 
 import com.github.karixdev.blogapi.registration.RegistrationService;
 import com.github.karixdev.blogapi.registration.dto.RegistrationRequest;
+import com.github.karixdev.blogapi.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -18,6 +17,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final RegistrationService registrationService;
+    private final ConfirmationTokenService tokenService;
 
     @PostMapping("/registration")
     public ResponseEntity<?> registerNewUser(
@@ -26,6 +26,13 @@ public class AuthController {
         return new ResponseEntity<>(
                 registrationService.registerNewUser(registrationRequest),
                 HttpStatus.CREATED);
+    }
+
+    @PostMapping("/confirm")
+    public Map<String, String> confirmEmail(
+            @RequestParam(name = "token") String token
+    ) {
+        return tokenService.confirmToken(token);
     }
 
 }
