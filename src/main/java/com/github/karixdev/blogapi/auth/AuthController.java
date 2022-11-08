@@ -1,5 +1,6 @@
-package com.github.karixdev.blogapi.registration;
+package com.github.karixdev.blogapi.auth;
 
+import com.github.karixdev.blogapi.registration.RegistrationService;
 import com.github.karixdev.blogapi.registration.dto.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,22 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/api/registration")
+@RequestMapping("/api/auth")
 @AllArgsConstructor
-public class RegistrationController {
+public class AuthController {
 
     private final RegistrationService registrationService;
 
-    @PostMapping
-    public ResponseEntity<Map<String, Boolean>> registerNewUser(
+    @PostMapping("/registration")
+    public ResponseEntity<?> registerNewUser(
             @Valid @RequestBody RegistrationRequest registrationRequest
     ) {
         return new ResponseEntity<>(
                 registrationService.registerNewUser(registrationRequest),
-                HttpStatus.CREATED
-        );
+                HttpStatus.CREATED);
     }
+
 }

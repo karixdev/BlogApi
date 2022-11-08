@@ -26,8 +26,7 @@ public class SecurityConfig {
                 .cors()
                     .disable()
                 .authorizeRequests(auth -> auth
-                        .antMatchers("/api/registration/**").permitAll()
-                        .antMatchers("/api/login").permitAll()
+                        .antMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
