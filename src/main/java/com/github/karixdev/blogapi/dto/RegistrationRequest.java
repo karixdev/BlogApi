@@ -1,4 +1,4 @@
-package com.github.karixdev.blogapi.registration.dto;
+package com.github.karixdev.blogapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.karixdev.blogapi.validation.UniqueEmail;

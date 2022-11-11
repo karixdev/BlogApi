@@ -1,4 +1,4 @@
-package com.github.karixdev.blogapi.user;
+package com.github.karixdev.blogapi.entity;
 
 public enum UserRole {
     USER,

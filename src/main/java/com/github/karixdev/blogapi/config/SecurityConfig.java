@@ -1,6 +1,6 @@
-package com.github.karixdev.blogapi.security.config;
+package com.github.karixdev.blogapi.config;
 
-import com.github.karixdev.blogapi.user.UserService;
+import com.github.karixdev.blogapi.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +36,11 @@ public class SecurityConfig {
                     .disable()
                 .userDetailsService(userService)
                 .build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

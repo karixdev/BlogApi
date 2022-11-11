@@ -1,5 +1,6 @@
-package com.github.karixdev.blogapi.registration.token;
+package com.github.karixdev.blogapi.repository;
 
+import com.github.karixdev.blogapi.entity.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

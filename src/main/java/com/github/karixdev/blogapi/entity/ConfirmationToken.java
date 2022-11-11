@@ -1,8 +1,6 @@
-package com.github.karixdev.blogapi.registration.token;
+package com.github.karixdev.blogapi.entity;
 
-import com.github.karixdev.blogapi.user.User;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

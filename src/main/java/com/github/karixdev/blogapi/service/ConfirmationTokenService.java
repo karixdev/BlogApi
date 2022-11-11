@@ -1,7 +1,8 @@
-package com.github.karixdev.blogapi.registration.token;
+package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.user.User;
-import com.github.karixdev.blogapi.user.UserService;
+import com.github.karixdev.blogapi.entity.ConfirmationToken;
+import com.github.karixdev.blogapi.repository.ConfirmationTokenRepository;
+import com.github.karixdev.blogapi.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

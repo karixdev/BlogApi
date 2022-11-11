@@ -1,5 +1,7 @@
-package com.github.karixdev.blogapi.user;
+package com.github.karixdev.blogapi.service;
 
+import com.github.karixdev.blogapi.entity.User;
+import com.github.karixdev.blogapi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

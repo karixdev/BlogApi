@@ -1,8 +1,8 @@
-package com.github.karixdev.blogapi.auth;
+package com.github.karixdev.blogapi.controller;
 
-import com.github.karixdev.blogapi.registration.RegistrationService;
-import com.github.karixdev.blogapi.registration.dto.RegistrationRequest;
-import com.github.karixdev.blogapi.registration.token.ConfirmationTokenService;
+import com.github.karixdev.blogapi.service.RegistrationService;
+import com.github.karixdev.blogapi.dto.RegistrationRequest;
+import com.github.karixdev.blogapi.service.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

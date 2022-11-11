@@ -1,6 +1,6 @@
-package com.github.karixdev.blogapi.email;
+package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.registration.token.ConfirmationToken;
+import com.github.karixdev.blogapi.entity.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

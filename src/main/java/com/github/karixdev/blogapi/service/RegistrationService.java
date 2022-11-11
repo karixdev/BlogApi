@@ -1,13 +1,10 @@
-package com.github.karixdev.blogapi.registration;
+package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.email.EmailService;
-import com.github.karixdev.blogapi.registration.dto.RegistrationRequest;
-import com.github.karixdev.blogapi.registration.token.ConfirmationToken;
-import com.github.karixdev.blogapi.registration.token.ConfirmationTokenService;
-import com.github.karixdev.blogapi.user.User;
-import com.github.karixdev.blogapi.user.UserRepository;
-import com.github.karixdev.blogapi.user.UserRole;
-import com.github.karixdev.blogapi.user.UserService;
+import com.github.karixdev.blogapi.dto.RegistrationRequest;
+import com.github.karixdev.blogapi.entity.ConfirmationToken;
+import com.github.karixdev.blogapi.entity.User;
+import com.github.karixdev.blogapi.repository.UserRepository;
+import com.github.karixdev.blogapi.entity.UserRole;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
