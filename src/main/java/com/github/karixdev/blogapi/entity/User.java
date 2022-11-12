@@ -26,7 +26,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User implements UserDetails {
+public class User {
 
     @Id
     @SequenceGenerator(
@@ -93,39 +93,6 @@ public class User implements UserDetails {
         this.password = password;
         this.userRole = userRole;
         this.isEnabled = isEnabled;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(userRole.name());
-
-        return Collections.singletonList(authority);
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
     }
 
     @Override
