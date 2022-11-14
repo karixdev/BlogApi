@@ -29,7 +29,7 @@ public class RegistrationService {
                 .email(registrationRequest.getEmail())
                 .firstName(registrationRequest.getFirstName())
                 .lastName(registrationRequest.getLastName())
-                .userRole(UserRole.USER)
+                .userRole(UserRole.ROLE_USER)
                 .isEnabled(Boolean.FALSE)
                 .password(encodedPassword)
                 .build();
