@@ -1,6 +1,6 @@
 package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.dto.RegistrationRequest;
+import com.github.karixdev.blogapi.dto.request.RegistrationRequest;
 import com.github.karixdev.blogapi.entity.ConfirmationToken;
 import com.github.karixdev.blogapi.entity.User;
 import com.github.karixdev.blogapi.repository.UserRepository;

@@ -1,6 +1,6 @@
 package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.dto.UserResponse;
+import com.github.karixdev.blogapi.dto.response.UserResponse;
 import com.github.karixdev.blogapi.entity.User;
 import com.github.karixdev.blogapi.repository.UserRepository;
 import lombok.AllArgsConstructor;

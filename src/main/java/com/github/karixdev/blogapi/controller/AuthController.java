@@ -1,21 +1,19 @@
 package com.github.karixdev.blogapi.controller;
 
 import com.github.karixdev.blogapi.config.JwtConfiguration;
-import com.github.karixdev.blogapi.dto.LoginRequest;
-import com.github.karixdev.blogapi.dto.LoginResponse;
+import com.github.karixdev.blogapi.dto.request.LoginRequest;
+import com.github.karixdev.blogapi.dto.response.LoginResponse;
 import com.github.karixdev.blogapi.service.LoginService;
 import com.github.karixdev.blogapi.service.RegistrationService;
-import com.github.karixdev.blogapi.dto.RegistrationRequest;
+import com.github.karixdev.blogapi.dto.request.RegistrationRequest;
 import com.github.karixdev.blogapi.service.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/auth")

@@ -1,22 +1,15 @@
 package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.dto.LoginRequest;
-import com.github.karixdev.blogapi.dto.LoginResponse;
-import com.github.karixdev.blogapi.dto.UserResponse;
-import com.github.karixdev.blogapi.entity.UserRole;
+import com.github.karixdev.blogapi.dto.request.LoginRequest;
+import com.github.karixdev.blogapi.dto.response.LoginResponse;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import com.github.karixdev.blogapi.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

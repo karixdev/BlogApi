@@ -1,4 +1,4 @@
-package com.github.karixdev.blogapi.dto;
+package com.github.karixdev.blogapi.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.karixdev.blogapi.entity.UserRole;

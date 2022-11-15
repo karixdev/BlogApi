@@ -1,4 +1,4 @@
-package com.github.karixdev.blogapi.dto;
+package com.github.karixdev.blogapi.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
