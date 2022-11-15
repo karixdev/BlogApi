@@ -43,4 +43,14 @@ public class BlogPostController {
         return blogPostService.getById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping
+    public BlogPostResponse update(
+            @RequestParam(name = "id") Long id,
+            @Valid @RequestBody BlogPostRequest blogPostRequest,
+            @CurrentUser UserPrincipal userPrincipal
+    ) {
+        return blogPostService.updateBlogPost(id, blogPostRequest, userPrincipal);
+    }
+
 }

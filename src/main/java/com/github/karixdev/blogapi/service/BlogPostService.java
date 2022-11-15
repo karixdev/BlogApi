@@ -3,6 +3,7 @@ package com.github.karixdev.blogapi.service;
 import com.github.karixdev.blogapi.dto.request.BlogPostRequest;
 import com.github.karixdev.blogapi.dto.response.BlogPostResponse;
 import com.github.karixdev.blogapi.entity.BlogPost;
+import com.github.karixdev.blogapi.exception.ForbiddenActionException;
 import com.github.karixdev.blogapi.exception.ResourceNotFoundException;
 import com.github.karixdev.blogapi.repository.BlogPostRepository;
 import com.github.karixdev.blogapi.security.UserPrincipal;
@@ -42,6 +43,25 @@ public class BlogPostService {
 
     public BlogPostResponse getById(Long id) {
         return mapBlogPostToBlogPostResponse(findByIdOrThrowException(id));
+    }
+
+    public BlogPostResponse updateBlogPost(
+            Long id,
+            BlogPostRequest request,
+            UserPrincipal userPrincipal
+    ) {
+        BlogPost blogPost = findByIdOrThrowException(id);
+
+        if (!blogPost.getAuthor().equals(userPrincipal.getUser())) {
+            throw new ForbiddenActionException("You can not update posts of which you are not the author");
+        }
+
+        blogPost.setTitle(request.getTitle());
+        blogPost.setContent(request.getContent());
+
+        blogPost = blogPostRepository.save(blogPost);
+
+        return mapBlogPostToBlogPostResponse(blogPost);
     }
 
     public BlogPost findByIdOrThrowException(Long id) {
