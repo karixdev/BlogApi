@@ -1,0 +1,30 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/blogapi
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mail:
+    properties:
+      auth: false
+      mail:
+        smtp:
+          starttls:
+            enable: false
+
+    host: localhost
+    port: 1025
+
+jwt:
+  expiration-hours: 1
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
