@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class BlogPostService {
@@ -62,6 +64,21 @@ public class BlogPostService {
         blogPost = blogPostRepository.save(blogPost);
 
         return mapBlogPostToBlogPostResponse(blogPost);
+    }
+
+    public Map<String, String> deleteBlogPost(
+            Long id,
+            UserPrincipal userPrincipal
+    ) {
+        BlogPost blogPost = findByIdOrThrowException(id);
+
+        if (!blogPost.getAuthor().equals(userPrincipal.getUser())) {
+            throw new ForbiddenActionException("You can not update posts of which you are not the author");
+        }
+
+        blogPostRepository.delete(blogPost);
+
+        return Map.of("message", "success");
     }
 
     public BlogPost findByIdOrThrowException(Long id) {

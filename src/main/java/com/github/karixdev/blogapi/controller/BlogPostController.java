@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/blog-post")
@@ -53,4 +54,12 @@ public class BlogPostController {
         return blogPostService.updateBlogPost(id, blogPostRequest, userPrincipal);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping
+    public Map<String, String> delete(
+            @RequestParam(name = "id") Long id,
+            @CurrentUser UserPrincipal userPrincipal
+    ) {
+        return blogPostService.deleteBlogPost(id, userPrincipal);
+    }
 }
