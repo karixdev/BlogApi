@@ -35,27 +35,19 @@ public class JwtProvider {
                 .claim("roles", authorities)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expiresAt))
-                .signWith(SignatureAlgorithm.HS256, jwtConfiguration.signingKey())
+                .signWith(SignatureAlgorithm.RS256, jwtConfiguration.privateKey())
                 .compact();
     }
 
     public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(jwtConfiguration.signingKey())
+                    .setSigningKey(jwtConfiguration.publicKey())
                     .parseClaimsJws(token);
 
             return true;
-        } catch (SignatureException e) {
-            log.error("Invalid JWT signature: {}", e.getMessage());
-        } catch (MalformedJwtException e) {
-            log.error("Invalid JWT token: {}", e.getMessage());
-        } catch (ExpiredJwtException e) {
-            log.error("JWT token is expired: {}", e.getMessage());
-        } catch (UnsupportedJwtException e) {
-            log.error("JWT token is unsupported: {}", e.getMessage());
-        } catch (IllegalArgumentException e) {
-            log.error("JWT claims string is empty: {}", e.getMessage());
+        } catch (JwtException e) {
+            log.error("JWT Exception: {}", e.getMessage());
         }
 
         return false;
@@ -63,7 +55,7 @@ public class JwtProvider {
 
     public Claims getClaimsFromToken(String token) {
         return Jwts.parser()
-                .setSigningKey(jwtConfiguration.signingKey())
+                .setSigningKey(jwtConfiguration.publicKey())
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -72,16 +64,8 @@ public class JwtProvider {
         return claimsResolver.apply(getClaimsFromToken(token));
     }
 
-    public Date getExpirationDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getExpiration);
-    }
-
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
-    }
-
-    public boolean isTokenNonExpired(String token) {
-        return getExpirationDateFromToken(token).before(new Date());
     }
 
 }
