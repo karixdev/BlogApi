@@ -5,6 +5,7 @@ import com.github.karixdev.blogapi.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/auth/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/blog-post/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

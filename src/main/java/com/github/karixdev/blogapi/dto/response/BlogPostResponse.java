@@ -16,7 +16,7 @@ public class BlogPostResponse {
     private String title;
     private String content;
 
-    @JsonIgnoreProperties({ "is_enabled", "role" })
+    @JsonIgnoreProperties({ "is_enabled", "role", "email" })
     private UserResponse author;
 
 }

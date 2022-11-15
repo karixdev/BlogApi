@@ -6,11 +6,9 @@ import com.github.karixdev.blogapi.security.CurrentUser;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import com.github.karixdev.blogapi.service.BlogPostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,6 +26,21 @@ public class BlogPostController {
             @Valid @RequestBody BlogPostRequest blogPostRequest
     ) {
         return blogPostService.create(userPrincipal, blogPostRequest);
+    }
+
+    @GetMapping("/collection")
+    public Page<BlogPostResponse> getAll(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "5") Integer size
+    ) {
+        return blogPostService.getAllPaginated(page, size);
+    }
+
+    @GetMapping
+    public BlogPostResponse getById(
+            @RequestParam(name = "id") Long id
+    ) {
+        return blogPostService.getById(id);
     }
 
 }
