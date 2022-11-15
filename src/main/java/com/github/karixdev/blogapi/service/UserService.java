@@ -23,6 +23,8 @@ public class UserService {
                 .email(user.getEmail())
                 .isEnabled(user.getIsEnabled())
                 .role(user.getUserRole())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .build();
     }
 }

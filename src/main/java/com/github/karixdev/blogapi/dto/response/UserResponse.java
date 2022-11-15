@@ -25,4 +25,10 @@ public class UserResponse {
     @JsonProperty("role")
     private UserRole role;
 
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
 }
