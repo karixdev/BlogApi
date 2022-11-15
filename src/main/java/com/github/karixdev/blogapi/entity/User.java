@@ -1,14 +1,11 @@
 package com.github.karixdev.blogapi.entity;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "User")
 @Table(
@@ -43,6 +40,7 @@ public class User {
             updatable = false,
             nullable = false
     )
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Column(
@@ -78,6 +76,14 @@ public class User {
             nullable = false
     )
     private Boolean isEnabled;
+
+    @OneToMany(
+            mappedBy = "author",
+            orphanRemoval = true
+    )
+    @ToString.Exclude
+    @Builder.Default
+    private Set<BlogPost> blogPosts = new HashSet<>();
 
     public User(
             String email,
