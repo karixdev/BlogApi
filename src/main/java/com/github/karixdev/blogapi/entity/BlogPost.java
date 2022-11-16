@@ -5,7 +5,9 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -55,11 +57,15 @@ public class BlogPost {
             name = "author_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "author_id_fk"
+                    name = "blog_post_author_id_fk"
             ),
             nullable = false
     )
     private User author;
+
+    @OneToMany(mappedBy = "blogPost", orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Comment> comments = new LinkedHashSet<>();
 
     public BlogPost(
             String title,
