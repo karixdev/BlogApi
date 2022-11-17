@@ -6,10 +6,8 @@ import com.github.karixdev.blogapi.security.CurrentUser;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import com.github.karixdev.blogapi.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,6 +24,15 @@ public class CommentController {
             @Valid @RequestBody CommentRequest commentRequest
     ) {
         return commentService.create(userPrincipal, commentRequest);
+    }
+
+    @GetMapping("/blog-post/{id}")
+    public Page<CommentResponse> getCommentsByBlogPost(
+            @PathVariable(name = "id") Long blogPostId,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer size
+    ) {
+        return commentService.getCommentsByBlogPost(blogPostId, page, size);
     }
 
 }

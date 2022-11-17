@@ -7,6 +7,8 @@ import com.github.karixdev.blogapi.entity.Comment;
 import com.github.karixdev.blogapi.repository.CommentRepository;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,6 +34,15 @@ public class CommentService {
         return mapCommentToCommentResponse(comment);
     }
 
+    public Page<CommentResponse> getCommentsByBlogPost(Long blogPostId, Integer page, Integer size) {
+        blogPostService.findByIdOrThrowException(blogPostId);
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        return commentRepository.findByBlogPostId(blogPostId, pageRequest)
+                .map(this::mapCommentToCommentResponse);
+    }
+
     public CommentResponse mapCommentToCommentResponse(Comment comment) {
         return CommentResponse.builder()
                 .id(comment.getId())
@@ -39,5 +50,4 @@ public class CommentService {
                 .author(userService.mapUserToUserResponse(comment.getAuthor()))
                 .build();
     }
-
 }
