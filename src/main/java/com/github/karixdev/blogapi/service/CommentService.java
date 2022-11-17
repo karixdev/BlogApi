@@ -5,6 +5,8 @@ import com.github.karixdev.blogapi.dto.request.UpdateCommentRequest;
 import com.github.karixdev.blogapi.dto.response.CommentResponse;
 import com.github.karixdev.blogapi.entity.BlogPost;
 import com.github.karixdev.blogapi.entity.Comment;
+import com.github.karixdev.blogapi.entity.User;
+import com.github.karixdev.blogapi.entity.UserRole;
 import com.github.karixdev.blogapi.exception.ForbiddenActionException;
 import com.github.karixdev.blogapi.exception.ResourceNotFoundException;
 import com.github.karixdev.blogapi.repository.CommentRepository;
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +61,28 @@ public class CommentService {
         commentRepository.save(comment);
 
         return mapCommentToCommentResponse(comment);
+    }
+
+    public Map<String, String> delete(UserPrincipal userPrincipal, Long id) {
+        Comment comment = findByIdOrThrowException(id);
+
+        User currentUser = userPrincipal.getUser();
+        User author = comment.getAuthor();
+
+        boolean isCurrentUserAnAuthor = author.equals(currentUser);
+
+        if (!isCurrentUserAnAuthor &&
+                currentUser.getUserRole() != UserRole.ROLE_ADMIN) {
+            throw new ForbiddenActionException("You can not delete comment of which you are not the author");
+        }
+
+        if (userService.isUserAnAdmin(currentUser) && userService.isUserAnAdmin(author) && !isCurrentUserAnAuthor) {
+            throw new ForbiddenActionException("You can not delete comment of which you are not the author");
+        }
+
+        commentRepository.delete(comment);
+
+        return Map.of("message", "success");
     }
 
     public Comment findByIdOrThrowException(Long id) {

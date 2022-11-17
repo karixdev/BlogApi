@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -48,6 +49,14 @@ public class CommentController {
             @Valid @RequestBody UpdateCommentRequest updateCommentRequest
     ) {
         return commentService.update(userPrincipal, id, updateCommentRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public Map<String, String> delete(
+            @CurrentUser UserPrincipal userPrincipal,
+            @PathVariable(name = "id") Long id
+    ) {
+        return commentService.delete(userPrincipal, id);
     }
 
 }
