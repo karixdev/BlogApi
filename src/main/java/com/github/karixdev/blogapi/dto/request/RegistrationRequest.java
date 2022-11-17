@@ -1,7 +1,7 @@
 package com.github.karixdev.blogapi.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.karixdev.blogapi.validation.UniqueEmail;
+import com.github.karixdev.blogapi.validation.constraint.UniqueEmail;
 import lombok.Data;
 
 import javax.validation.constraints.Email;

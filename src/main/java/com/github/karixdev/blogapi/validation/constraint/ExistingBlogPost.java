@@ -1,4 +1,6 @@
-package com.github.karixdev.blogapi.validation;
+package com.github.karixdev.blogapi.validation.constraint;
+
+import com.github.karixdev.blogapi.validation.validator.ExistingBlogPostValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -7,11 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = UniqueEmailValidator.class)
+@Constraint(validatedBy = ExistingBlogPostValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UniqueEmail {
-    String message() default "User with provided email exists";
+public @interface ExistingBlogPost {
+    String message() default "Blog post with provided id not found";
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 }

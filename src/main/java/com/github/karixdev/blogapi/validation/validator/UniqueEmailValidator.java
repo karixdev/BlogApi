@@ -1,7 +1,8 @@
-package com.github.karixdev.blogapi.validation;
+package com.github.karixdev.blogapi.validation.validator;
 
 
 import com.github.karixdev.blogapi.repository.UserRepository;
+import com.github.karixdev.blogapi.validation.constraint.UniqueEmail;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

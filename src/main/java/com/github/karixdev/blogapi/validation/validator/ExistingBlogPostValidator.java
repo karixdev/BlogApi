@@ -1,6 +1,7 @@
-package com.github.karixdev.blogapi.validation;
+package com.github.karixdev.blogapi.validation.validator;
 
 import com.github.karixdev.blogapi.repository.BlogPostRepository;
+import com.github.karixdev.blogapi.validation.constraint.ExistingBlogPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
