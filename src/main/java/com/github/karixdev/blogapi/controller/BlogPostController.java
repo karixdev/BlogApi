@@ -37,17 +37,17 @@ public class BlogPostController {
         return blogPostService.getAllPaginated(page, size);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public BlogPostResponse getById(
-            @RequestParam(name = "id") Long id
+            @PathVariable(name = "id") Long id
     ) {
         return blogPostService.getById(id);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping
+    @PutMapping("/{id}")
     public BlogPostResponse update(
-            @RequestParam(name = "id") Long id,
+            @PathVariable(name = "id") Long id,
             @Valid @RequestBody BlogPostRequest blogPostRequest,
             @CurrentUser UserPrincipal userPrincipal
     ) {
@@ -55,9 +55,9 @@ public class BlogPostController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public Map<String, String> delete(
-            @RequestParam(name = "id") Long id,
+            @PathVariable(name = "id") Long id,
             @CurrentUser UserPrincipal userPrincipal
     ) {
         return blogPostService.deleteBlogPost(id, userPrincipal);
