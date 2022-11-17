@@ -8,6 +8,8 @@ import com.github.karixdev.blogapi.security.UserPrincipal;
 import com.github.karixdev.blogapi.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,11 +22,14 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public CommentResponse create(
+    public ResponseEntity<CommentResponse> create(
             @CurrentUser UserPrincipal userPrincipal,
             @Valid @RequestBody CommentRequest commentRequest
     ) {
-        return commentService.create(userPrincipal, commentRequest);
+        return new ResponseEntity<>(
+                commentService.create(userPrincipal, commentRequest),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping("/blog-post/{id}")
