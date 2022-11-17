@@ -1,6 +1,7 @@
 package com.github.karixdev.blogapi.controller;
 
 import com.github.karixdev.blogapi.dto.request.CommentRequest;
+import com.github.karixdev.blogapi.dto.request.UpdateCommentRequest;
 import com.github.karixdev.blogapi.dto.response.CommentResponse;
 import com.github.karixdev.blogapi.security.CurrentUser;
 import com.github.karixdev.blogapi.security.UserPrincipal;
@@ -33,6 +34,15 @@ public class CommentController {
             @RequestParam(name = "size", defaultValue = "10") Integer size
     ) {
         return commentService.getCommentsByBlogPost(blogPostId, page, size);
+    }
+
+    @PutMapping("/{id}")
+    public CommentResponse update(
+            @CurrentUser UserPrincipal userPrincipal,
+            @PathVariable(name = "id") Long id,
+            @Valid @RequestBody UpdateCommentRequest updateCommentRequest
+    ) {
+        return commentService.update(userPrincipal, id, updateCommentRequest);
     }
 
 }

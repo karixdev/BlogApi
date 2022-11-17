@@ -1,9 +1,12 @@
 package com.github.karixdev.blogapi.service;
 
 import com.github.karixdev.blogapi.dto.request.CommentRequest;
+import com.github.karixdev.blogapi.dto.request.UpdateCommentRequest;
 import com.github.karixdev.blogapi.dto.response.CommentResponse;
 import com.github.karixdev.blogapi.entity.BlogPost;
 import com.github.karixdev.blogapi.entity.Comment;
+import com.github.karixdev.blogapi.exception.ForbiddenActionException;
+import com.github.karixdev.blogapi.exception.ResourceNotFoundException;
 import com.github.karixdev.blogapi.repository.CommentRepository;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +44,28 @@ public class CommentService {
 
         return commentRepository.findByBlogPostId(blogPostId, pageRequest)
                 .map(this::mapCommentToCommentResponse);
+    }
+
+    public CommentResponse update(UserPrincipal userPrincipal, Long id, UpdateCommentRequest updateCommentRequest) {
+        Comment comment = findByIdOrThrowException(id);
+
+        if (!comment.getAuthor().equals(userPrincipal.getUser())) {
+            throw new ForbiddenActionException("You can not update comment of which you are not the author");
+        }
+
+        comment.setContent(updateCommentRequest.getContent());
+        commentRepository.save(comment);
+
+        return mapCommentToCommentResponse(comment);
+    }
+
+    public Comment findByIdOrThrowException(Long id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new ResourceNotFoundException(
+                            String.format("Comment with id: %d not found", id)
+                    );
+                });
     }
 
     public CommentResponse mapCommentToCommentResponse(Comment comment) {
