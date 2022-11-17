@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/auth/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/blog-post/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/comment/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
