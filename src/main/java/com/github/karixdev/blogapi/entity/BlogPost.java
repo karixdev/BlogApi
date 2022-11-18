@@ -67,6 +67,9 @@ public class BlogPost {
     @ToString.Exclude
     private Set<Comment> comments = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "blogPost", orphanRemoval = true)
+    private Set<BlogPostVote> votes = new LinkedHashSet<>();
+
     public BlogPost(
             String title,
             String content,
@@ -82,11 +85,11 @@ public class BlogPost {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BlogPost blogPost = (BlogPost) o;
-        return Objects.equals(id, blogPost.id) && Objects.equals(title, blogPost.title) && Objects.equals(content, blogPost.content) && Objects.equals(author, blogPost.author);
+        return Objects.equals(id, blogPost.id) && Objects.equals(title, blogPost.title) && Objects.equals(content, blogPost.content) && Objects.equals(author, blogPost.author) && Objects.equals(comments, blogPost.comments) && Objects.equals(votes, blogPost.votes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, content, author);
+        return Objects.hash(id, title, content, author, comments, votes);
     }
 }

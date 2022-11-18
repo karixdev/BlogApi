@@ -3,7 +3,9 @@ package com.github.karixdev.blogapi.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "Comment")
 @Table(name = "comment")
@@ -59,16 +61,19 @@ public class Comment {
     )
     private User author;
 
+    @OneToMany(mappedBy = "comment", orphanRemoval = true)
+    private Set<CommentVote> votes = new LinkedHashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(id, comment.id) && Objects.equals(content, comment.content) && Objects.equals(blogPost, comment.blogPost) && Objects.equals(author, comment.author);
+        return Objects.equals(id, comment.id) && Objects.equals(content, comment.content) && Objects.equals(blogPost, comment.blogPost) && Objects.equals(author, comment.author) && Objects.equals(votes, comment.votes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, content, blogPost, author);
+        return Objects.hash(id, content, blogPost, author, votes);
     }
 }
