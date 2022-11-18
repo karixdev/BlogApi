@@ -31,7 +31,7 @@ public class BlogPostService {
 
         blogPost = blogPostRepository.save(blogPost);
 
-        return mapBlogPostToBlogPostResponse(blogPost);
+        return new BlogPostResponse(blogPost);
     }
 
     public Page<BlogPostResponse> getAllPaginated(Integer page, Integer size) {
@@ -40,11 +40,11 @@ public class BlogPostService {
         PageRequest pageRequest = PageRequest.of(page, size);
 
         return blogPostRepository.findAllBlogPost(pageRequest)
-                .map(this::mapBlogPostToBlogPostResponse);
+                .map(BlogPostResponse::new);
     }
 
     public BlogPostResponse getById(Long id) {
-        return mapBlogPostToBlogPostResponse(findByIdOrThrowException(id));
+        return new BlogPostResponse(findByIdOrThrowException(id));
     }
 
     public BlogPostResponse updateBlogPost(
@@ -61,9 +61,9 @@ public class BlogPostService {
         blogPost.setTitle(request.getTitle());
         blogPost.setContent(request.getContent());
 
-        blogPost = blogPostRepository.save(blogPost);
+        blogPostRepository.save(blogPost);
 
-        return mapBlogPostToBlogPostResponse(blogPost);
+        return new BlogPostResponse(blogPost);
     }
 
     public Map<String, String> deleteBlogPost(
@@ -89,14 +89,4 @@ public class BlogPostService {
                     );
                 });
     }
-
-    private BlogPostResponse mapBlogPostToBlogPostResponse(BlogPost blogPost) {
-        return BlogPostResponse.builder()
-                .id(blogPost.getId())
-                .title(blogPost.getTitle())
-                .content(blogPost.getContent())
-                .author(userService.mapUserToUserResponse(blogPost.getAuthor()))
-                .build();
-    }
-
 }

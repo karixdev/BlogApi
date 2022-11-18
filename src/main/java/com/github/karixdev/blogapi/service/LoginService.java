@@ -2,6 +2,7 @@ package com.github.karixdev.blogapi.service;
 
 import com.github.karixdev.blogapi.dto.request.LoginRequest;
 import com.github.karixdev.blogapi.dto.response.LoginResponse;
+import com.github.karixdev.blogapi.dto.response.UserResponse;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import com.github.karixdev.blogapi.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class LoginService {
 
         return LoginResponse.builder()
                 .accessToken(token)
-                .userResponse(userService.mapUserToUserResponse(userPrincipal.getUser()))
+                .userResponse(new UserResponse(userPrincipal.getUser()))
                 .build();
     }
 

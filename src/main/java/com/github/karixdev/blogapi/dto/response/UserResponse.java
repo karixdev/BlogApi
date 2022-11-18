@@ -1,6 +1,7 @@
 package com.github.karixdev.blogapi.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.karixdev.blogapi.entity.User;
 import com.github.karixdev.blogapi.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,5 +31,13 @@ public class UserResponse {
 
     @JsonProperty("last_name")
     private String lastName;
+
+    public UserResponse(User user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.isEnabled = user.getIsEnabled();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+    }
 
 }

@@ -36,9 +36,9 @@ public class CommentService {
                 .content(commentRequest.getContent())
                 .build();
 
-        comment = commentRepository.save(comment);
+        commentRepository.save(comment);
 
-        return mapCommentToCommentResponse(comment);
+        return new CommentResponse(comment);
     }
 
     public Page<CommentResponse> getCommentsByBlogPost(Long blogPostId, Integer page, Integer size) {
@@ -47,7 +47,7 @@ public class CommentService {
         PageRequest pageRequest = PageRequest.of(page, size);
 
         return commentRepository.findByBlogPostId(blogPostId, pageRequest)
-                .map(this::mapCommentToCommentResponse);
+                .map(CommentResponse::new);
     }
 
     public CommentResponse update(UserPrincipal userPrincipal, Long id, UpdateCommentRequest updateCommentRequest) {
@@ -60,7 +60,7 @@ public class CommentService {
         comment.setContent(updateCommentRequest.getContent());
         commentRepository.save(comment);
 
-        return mapCommentToCommentResponse(comment);
+        return new CommentResponse(comment);
     }
 
     public Map<String, String> delete(UserPrincipal userPrincipal, Long id) {
@@ -92,13 +92,5 @@ public class CommentService {
                             String.format("Comment with id: %d not found", id)
                     );
                 });
-    }
-
-    public CommentResponse mapCommentToCommentResponse(Comment comment) {
-        return CommentResponse.builder()
-                .id(comment.getId())
-                .content(comment.getContent())
-                .author(userService.mapUserToUserResponse(comment.getAuthor()))
-                .build();
     }
 }

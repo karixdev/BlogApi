@@ -1,6 +1,5 @@
 package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.dto.response.UserResponse;
 import com.github.karixdev.blogapi.entity.User;
 import com.github.karixdev.blogapi.entity.UserRole;
 import com.github.karixdev.blogapi.repository.UserRepository;
@@ -22,14 +21,4 @@ public class UserService {
         return user.getUserRole() == UserRole.ROLE_ADMIN;
     }
 
-    public UserResponse mapUserToUserResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .isEnabled(user.getIsEnabled())
-                .role(user.getUserRole())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .build();
-    }
 }
