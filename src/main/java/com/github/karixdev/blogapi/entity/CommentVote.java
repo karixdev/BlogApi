@@ -24,6 +24,11 @@ public class CommentVote extends BaseVote {
     )
     private Comment comment;
 
+    public CommentVote(User user, Comment comment) {
+        super(user);
+        this.comment = comment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

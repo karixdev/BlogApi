@@ -2,14 +2,13 @@ package com.github.karixdev.blogapi.service;
 
 import com.github.karixdev.blogapi.dto.request.CommentRequest;
 import com.github.karixdev.blogapi.dto.request.UpdateCommentRequest;
+import com.github.karixdev.blogapi.dto.request.VoteRequest;
 import com.github.karixdev.blogapi.dto.response.CommentResponse;
-import com.github.karixdev.blogapi.entity.BlogPost;
-import com.github.karixdev.blogapi.entity.Comment;
-import com.github.karixdev.blogapi.entity.User;
-import com.github.karixdev.blogapi.entity.UserRole;
+import com.github.karixdev.blogapi.entity.*;
 import com.github.karixdev.blogapi.exception.ForbiddenActionException;
 import com.github.karixdev.blogapi.exception.ResourceNotFoundException;
 import com.github.karixdev.blogapi.repository.CommentRepository;
+import com.github.karixdev.blogapi.repository.CommentVoteRepository;
 import com.github.karixdev.blogapi.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +24,7 @@ public class CommentService {
     private final BlogPostService blogPostService;
     private final UserService userService;
     private final CommentRepository commentRepository;
+    private final CommentVoteRepository commentVoteRepository;
 
     public CommentResponse create(UserPrincipal userPrincipal, CommentRequest commentRequest) {
         BlogPost blogPost = blogPostService.findByIdOrThrowException(
@@ -92,5 +92,22 @@ public class CommentService {
                             String.format("Comment with id: %d not found", id)
                     );
                 });
+    }
+
+    public Map<String, String> vote(UserPrincipal userPrincipal, Long id, VoteRequest voteRequest) {
+        User user = userPrincipal.getUser();
+        Comment comment = findByIdOrThrowException(id);
+
+        CommentVote blogPostVote = comment.getVotes()
+                .stream()
+                .filter(vote -> vote.getUser().equals(user))
+                .findFirst()
+                .orElse(new CommentVote(user, comment));
+
+        blogPostVote.setVoteType(voteRequest.getVoteType());
+
+        commentVoteRepository.save(blogPostVote);
+
+        return Map.of("message", "success");
     }
 }

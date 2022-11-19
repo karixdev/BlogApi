@@ -2,6 +2,7 @@ package com.github.karixdev.blogapi.controller;
 
 import com.github.karixdev.blogapi.dto.request.CommentRequest;
 import com.github.karixdev.blogapi.dto.request.UpdateCommentRequest;
+import com.github.karixdev.blogapi.dto.request.VoteRequest;
 import com.github.karixdev.blogapi.dto.response.CommentResponse;
 import com.github.karixdev.blogapi.security.CurrentUser;
 import com.github.karixdev.blogapi.security.UserPrincipal;
@@ -59,4 +60,12 @@ public class CommentController {
         return commentService.delete(userPrincipal, id);
     }
 
+    @PostMapping("/{id}/vote")
+    public Map<String, String> vote(
+            @CurrentUser UserPrincipal userPrincipal,
+            @PathVariable(name = "id") Long id,
+            @RequestBody VoteRequest voteRequest
+    ) {
+        return commentService.vote(userPrincipal, id, voteRequest);
+    }
 }
