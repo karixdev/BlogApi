@@ -35,6 +35,6 @@ public class BlogPostVote extends BaseVote {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), blogPost);
+        return Objects.hash(super.hashCode(), blogPost.getId());
     }
 }
