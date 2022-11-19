@@ -45,6 +45,10 @@ public class BaseVote {
     )
     private VoteType voteType;
 
+    public BaseVote(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

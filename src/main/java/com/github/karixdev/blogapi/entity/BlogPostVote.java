@@ -24,6 +24,11 @@ public class BlogPostVote extends BaseVote {
     )
     private BlogPost blogPost;
 
+    public BlogPostVote(User user, BlogPost blogPost) {
+        super(user);
+        this.blogPost = blogPost;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

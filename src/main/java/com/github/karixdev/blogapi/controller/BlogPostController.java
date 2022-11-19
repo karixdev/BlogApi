@@ -1,6 +1,7 @@
 package com.github.karixdev.blogapi.controller;
 
 import com.github.karixdev.blogapi.dto.request.BlogPostRequest;
+import com.github.karixdev.blogapi.dto.request.VoteRequest;
 import com.github.karixdev.blogapi.dto.response.BlogPostResponse;
 import com.github.karixdev.blogapi.security.CurrentUser;
 import com.github.karixdev.blogapi.security.UserPrincipal;
@@ -61,5 +62,14 @@ public class BlogPostController {
             @CurrentUser UserPrincipal userPrincipal
     ) {
         return blogPostService.deleteBlogPost(id, userPrincipal);
+    }
+
+    @PostMapping("/{id}/vote")
+    public Map<String, String> vote(
+            @CurrentUser UserPrincipal userPrincipal,
+            @PathVariable(name = "id") Long id,
+            @RequestBody VoteRequest voteRequest
+    ) {
+        return blogPostService.vote(userPrincipal, id, voteRequest);
     }
 }
