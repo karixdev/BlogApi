@@ -40,6 +40,6 @@ public class CommentVote extends BaseVote {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), comment);
+        return Objects.hash(super.hashCode(), comment.getId());
     }
 }
