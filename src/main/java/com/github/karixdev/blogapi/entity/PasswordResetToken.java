@@ -69,16 +69,22 @@ public class PasswordResetToken {
     )
     private LocalDateTime createdAt;
 
+    @Column(
+            name = "reset_at",
+            nullable = false
+    )
+    private LocalDateTime resetAt;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PasswordResetToken that = (PasswordResetToken) o;
-        return Objects.equals(id, that.id) && Objects.equals(token, that.token) && Objects.equals(user, that.user) && Objects.equals(expiresAt, that.expiresAt) && Objects.equals(createdAt, that.createdAt);
+        PasswordResetToken token1 = (PasswordResetToken) o;
+        return Objects.equals(id, token1.id) && Objects.equals(token, token1.token) && Objects.equals(user, token1.user) && Objects.equals(expiresAt, token1.expiresAt) && Objects.equals(createdAt, token1.createdAt) && Objects.equals(resetAt, token1.resetAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, token, expiresAt, createdAt);
+        return Objects.hash(id, token, expiresAt, createdAt, resetAt);
     }
 }
