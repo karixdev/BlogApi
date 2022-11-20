@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,10 +17,10 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
             SELECT token
             FROM PasswordResetToken token
             WHERE token.user = :user
+            AND token.resetAt IS NULL
+            ORDER BY token.createdAt DESC
             """)
-    Optional<PasswordResetToken> findByUser(
-            @Param("user") User user
-    );
+    List<PasswordResetToken> findNonResetSortDesc(@Param("user") User user);
 
     @Query("""
             SELECT resetToken

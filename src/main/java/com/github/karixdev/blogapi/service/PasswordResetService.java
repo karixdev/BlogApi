@@ -55,14 +55,13 @@ public class PasswordResetService {
     }
 
     public boolean canUserGenerateNewToken(User user) {
-        Optional<PasswordResetToken> optionalToken =
-                passwordResetTokenRepository.findByUser(user);
+        PasswordResetToken token =
+                passwordResetTokenRepository.findNonResetSortDesc(user).get(0);
 
-        if (optionalToken.isEmpty()) {
+        if (token == null) {
             return true;
         }
 
-        PasswordResetToken token = optionalToken.get();
         LocalDateTime now = LocalDateTime.now();
 
         if (now.isBefore(token.getExpiresAt()) && token.getResetAt() != null) {
