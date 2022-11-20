@@ -70,8 +70,7 @@ public class PasswordResetToken {
     private LocalDateTime createdAt;
 
     @Column(
-            name = "reset_at",
-            nullable = false
+            name = "reset_at"
     )
     private LocalDateTime resetAt;
 
