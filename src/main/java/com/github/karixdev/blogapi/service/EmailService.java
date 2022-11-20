@@ -1,6 +1,7 @@
 package com.github.karixdev.blogapi.service;
 
 import com.github.karixdev.blogapi.entity.ConfirmationToken;
+import com.github.karixdev.blogapi.entity.PasswordResetToken;
 import com.github.karixdev.blogapi.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,6 +21,11 @@ public class EmailService {
     public void sendEmailConfirmation(ConfirmationToken token) {
         send(token.getUser(), "Confirm your email",
                 getEmailConfirmationTemplate(token));
+    }
+
+    public void sendPasswordReset(PasswordResetToken token, long tokenExpirationMinutes) {
+        send(token.getUser(), "Password reset",
+                getPasswordResetTemplate(token, tokenExpirationMinutes));
     }
 
     @Async
@@ -50,4 +56,14 @@ public class EmailService {
         return String.format(template, token.getUser().getFirstName(), token.getToken());
     }
 
+    private String getPasswordResetTemplate(PasswordResetToken token, long tokenExpirationMinutes) {
+        String template = """
+                <div>
+                <p>Hello %s</p>
+                <p>Here's a <a href="http://localhost:8080/api/auth/confirm?token=%s">link</a> to reset your password - be quick because it only lasts for %d minutes</p>
+                </div>
+                """;
+
+        return String.format(template, token.getUser().getFirstName(), token.getToken(), tokenExpirationMinutes);
+    }
 }

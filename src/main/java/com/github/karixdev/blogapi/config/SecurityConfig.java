@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .antMatchers("/api/auth/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/blog-post/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/comment/**").permitAll()
+                        .antMatchers("/api/password-reset/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
