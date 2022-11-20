@@ -111,7 +111,7 @@ public class PasswordResetService {
         String template = """
                 <div>
                 <p>Hello %s</p>
-                <p>Here's a <a href="http://localhost:8080/api/password-rest/%s">link</a> to reset your password - be quick because it only lasts for %d minutes</p>
+                <p>Here's a <a href="http://localhost:8080/api/password-reset/%s">link</a> to reset your password - be quick because it only lasts for %d minutes</p>
                 </div>
                 """;
 
