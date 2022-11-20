@@ -18,16 +18,6 @@ public class EmailService {
 
     private final JavaMailSender sender;
 
-    public void sendEmailConfirmation(ConfirmationToken token) {
-        send(token.getUser(), "Confirm your email",
-                getEmailConfirmationTemplate(token));
-    }
-
-    public void sendPasswordReset(PasswordResetToken token, long tokenExpirationMinutes) {
-        send(token.getUser(), "Password reset",
-                getPasswordResetTemplate(token, tokenExpirationMinutes));
-    }
-
     @Async
     public void send(User user, String topic, String body) {
         MimeMessage mimeMessage = sender.createMimeMessage();
@@ -43,27 +33,5 @@ public class EmailService {
         } catch (MessagingException e) {
             throw new IllegalStateException("Failed to send an email confirmation");
         }
-    }
-
-    private String getEmailConfirmationTemplate(ConfirmationToken token) {
-        String template = """
-                <div>
-                <p>Hello %s</p>
-                <p>Here's email confirmation <a href="http://localhost:8080/api/auth/confirm?token=%s">link</a></p>
-                </div>
-                """;
-
-        return String.format(template, token.getUser().getFirstName(), token.getToken());
-    }
-
-    private String getPasswordResetTemplate(PasswordResetToken token, long tokenExpirationMinutes) {
-        String template = """
-                <div>
-                <p>Hello %s</p>
-                <p>Here's a <a href="http://localhost:8080/api/auth/confirm?token=%s">link</a> to reset your password - be quick because it only lasts for %d minutes</p>
-                </div>
-                """;
-
-        return String.format(template, token.getUser().getFirstName(), token.getToken(), tokenExpirationMinutes);
     }
 }

@@ -38,7 +38,8 @@ public class RegistrationService {
 
         userRepository.save(user);
 
-        emailService.sendEmailConfirmation(token);
+        emailService.send(user, "Confirm your email",
+                tokenService.getEmailTemplate(token));
 
         return Map.of("success", Boolean.TRUE);
     }

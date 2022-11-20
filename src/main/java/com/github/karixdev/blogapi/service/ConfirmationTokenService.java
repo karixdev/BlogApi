@@ -54,4 +54,15 @@ public class ConfirmationTokenService {
         return Map.of("message", "confirmed");
     }
 
+    public String getEmailTemplate(ConfirmationToken token) {
+        String template = """
+                <div>
+                <p>Hello %s</p>
+                <p>Here's email confirmation <a href="http://localhost:8080/api/auth/confirm?token=%s">link</a></p>
+                </div>
+                """;
+
+        return String.format(template, token.getUser().getFirstName(), token.getToken());
+    }
+
 }

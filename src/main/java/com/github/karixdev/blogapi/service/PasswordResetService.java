@@ -1,6 +1,6 @@
 package com.github.karixdev.blogapi.service;
 
-import com.github.karixdev.blogapi.dto.request.PasswordResetRequest;
+import com.github.karixdev.blogapi.dto.request.DemandPasswordResetRequest;
 import com.github.karixdev.blogapi.entity.PasswordResetToken;
 import com.github.karixdev.blogapi.entity.User;
 import com.github.karixdev.blogapi.exception.PasswordResetTokenAlreadySendException;
@@ -26,7 +26,7 @@ public class PasswordResetService {
     private final UserService userService;
     private final EmailService emailService;
 
-    public Map<String, String> generateNewToken(PasswordResetRequest passwordResetRequest) {
+    public Map<String, String> generateNewToken(DemandPasswordResetRequest passwordResetRequest) {
         User user;
 
         try {
@@ -43,7 +43,8 @@ public class PasswordResetService {
         }
 
         PasswordResetToken token = createToken(user);
-        emailService.sendPasswordReset(token, TOKEN_EXPIRATION_MINUTES);
+
+        emailService.send(token.getUser(), "Password reset", getEmailTemplate(token));
 
         return Map.of("message", "If user exists then email has been sent");
     }
@@ -71,5 +72,16 @@ public class PasswordResetService {
                 .createdAt(now)
                 .expiresAt(now.plusMinutes(TOKEN_EXPIRATION_MINUTES))
                 .build());
+    }
+
+    private String getEmailTemplate(PasswordResetToken token) {
+        String template = """
+                <div>
+                <p>Hello %s</p>
+                <p>Here's a <a href="http://localhost:8080/api/auth/confirm?token=%s">link</a> to reset your password - be quick because it only lasts for %d minutes</p>
+                </div>
+                """;
+
+        return String.format(template, token.getUser().getFirstName(), token.getToken(), TOKEN_EXPIRATION_MINUTES);
     }
 }
