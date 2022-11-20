@@ -11,12 +11,10 @@ import com.github.karixdev.blogapi.exception.ResourceNotFoundException;
 import com.github.karixdev.blogapi.repository.PasswordResetTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -29,7 +27,6 @@ public class PasswordResetService {
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final UserService userService;
     private final EmailService emailService;
-    private final PasswordEncoder encoder;
 
     public Map<String, String> generateNewToken(DemandPasswordResetRequest passwordResetRequest) {
         User user;
