@@ -21,4 +21,10 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
             @Param("user") User user
     );
 
+    @Query("""
+            SELECT resetToken
+            FROM PasswordResetToken resetToken
+            WHERE resetToken.token = :token
+            """)
+    Optional<PasswordResetToken> findByToken(@Param("token") String token);
 }

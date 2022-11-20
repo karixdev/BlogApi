@@ -1,12 +1,10 @@
 package com.github.karixdev.blogapi.controller;
 
 import com.github.karixdev.blogapi.dto.request.DemandPasswordResetRequest;
+import com.github.karixdev.blogapi.dto.request.PasswordResetRequest;
 import com.github.karixdev.blogapi.service.PasswordResetService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -23,6 +21,14 @@ public class PasswordResetController {
             @Valid @RequestBody DemandPasswordResetRequest passwordResetRequest
     ) {
         return passwordResetService.generateNewToken(passwordResetRequest);
+    }
+
+    @PostMapping("/{token}")
+    public Map<String, String> changePassword(
+            @PathVariable(name = "token") String token,
+            @Valid @RequestBody PasswordResetRequest passwordResetRequest
+    ) {
+        return passwordResetService.changePassword(token, passwordResetRequest);
     }
 
 }
