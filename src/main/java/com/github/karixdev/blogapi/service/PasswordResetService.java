@@ -57,9 +57,14 @@ public class PasswordResetService {
             return true;
         }
 
+        PasswordResetToken token = optionalToken.get();
         LocalDateTime now = LocalDateTime.now();
 
-        return now.isBefore(optionalToken.get().getExpiresAt());
+        if (now.isBefore(token.getExpiresAt()) && token.getResetAt() != null) {
+            return true;
+        }
+
+        return now.isAfter(token.getExpiresAt());
     }
 
     public PasswordResetToken createToken(User user) {
